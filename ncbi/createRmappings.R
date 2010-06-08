@@ -11,7 +11,7 @@ save(gene.symbol,file="gene.symbol.RData")
 save(gene.eid,file="gene.eid.RData")
 
 ## NCBI gene NP and NM. Create files for mappings to use in R
-gene2refseq.mouse <- read.table("~/data/ncbi/gene2refseqSimplified_mouse",sep="\t",as.is=TRUE)
+gene2refseq.mouse <- read.table("gene2refseqSimplified_mouse",sep="\t",as.is=TRUE)
 eid <- as.character(gene2refseq.mouse$V1)
 nm <- as.character(gene2refseq.mouse$V2)
 np <- as.character(gene2refseq.mouse$V3)
