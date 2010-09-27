@@ -34,7 +34,7 @@ gene2refseq.mouse <- read.table("gene2refseqSimplified_NM_mouse",sep="\t",as.is=
 eids <- as.character(gene2refseq.mouse$V1)
 nms <- as.character(gene2refseq.mouse$V2)
 
-goodinds <- grep("NM",nm) ## drop out others and blanks
+goodinds <- grep("NM",nms) ## drop out others and blanks
 eids <- eids[goodinds]
 nms <- nms[goodinds]
 ## can have multiple redundancies of NMs for each eid.
