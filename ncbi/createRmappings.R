@@ -35,8 +35,8 @@ eids <- as.character(gene2refseq.mouse$V1)
 nms <- as.character(gene2refseq.mouse$V2)
 
 goodinds <- grep("NM",nm) ## drop out others and blanks
-eids <- eid[goodinds]
-nms <- nm[goodinds]
+eids <- eids[goodinds]
+nms <- nms[goodinds]
 ## can have multiple redundancies of NMs for each eid.
  
 eid.of.nm <- eids
@@ -45,7 +45,7 @@ save(eid.of.nm,file="eid.of.nm.RData")
  
 ## NMs for a given Entrez ID
 nms.of.eid <- list()
-for ( eid in eids[1:25] ){
+for ( eid in eids ){
   nms.of.eid[[eid]] <- nms[which(eids==eid)]
 } 
 
