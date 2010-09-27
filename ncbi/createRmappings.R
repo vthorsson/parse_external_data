@@ -10,10 +10,9 @@ names(gene.eid) <- gene.symbol
 save(gene.symbol,file="gene.symbol.RData")
 save(gene.eid,file="gene.eid.RData")
 
-## NCBI gene NP and NM. Create files for mappings to use in R
+## NCBI gene NP. Create files for mappings to use in R
 gene2refseq.mouse <- read.table("gene2refseqSimplified_mouse",sep="\t",as.is=TRUE)
 eid <- as.character(gene2refseq.mouse$V1)
-nm <- as.character(gene2refseq.mouse$V2)
 np <- as.character(gene2refseq.mouse$V3)
 
 goodinds <- grep("NP",np) ## drop out the XP and blanks
@@ -28,3 +27,26 @@ eid <- eid[keepinds]
 np <- np[keepinds]
 names(np) <- eid
 save(np,file="np.RData")
+
+## NCBI gene NM. Create files for mappings to use in R
+gene2refseq.mouse <- read.table("gene2refseqSimplified_NM_mouse",sep="\t",as.is=TRUE)
+
+eids <- as.character(gene2refseq.mouse$V1)
+nms <- as.character(gene2refseq.mouse$V2)
+
+goodinds <- grep("NM",nm) ## drop out others and blanks
+eids <- eid[goodinds]
+nms <- nm[goodinds]
+## can have multiple redundancies of NMs for each eid.
+ 
+eid.of.nm <- eids
+names(eid.of.nm) <- nms
+save(eid.of.nm,file="eid.of.nm.RData")
+ 
+## NMs for a given Entrez ID
+nms.of.eid <- list()
+for ( eid in eids[1:25] ){
+  nms.of.eid[[eid]] <- nms[which(eids==eid)]
+} 
+
+save(nms.of.eid,file="nms.of.eid.RData")
