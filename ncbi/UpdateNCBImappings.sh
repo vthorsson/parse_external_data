@@ -42,11 +42,18 @@ sort -n t2 | uniq > t3
 mv t3 gene2refseqSimplified_human
 rm -f t1 t2
 
+awk -F '\t' '{OFS="\t";print $2,$4}' gene2refseq_human > t1
+sed 's/\.[0-9]//g' t1 > t2
+sort -n t2 | uniq > t3
+mv t3 gene2refseqSimplified_NM_human
+rm -f t1 t2
+
 ##
 ## Mapping files for R
 ##
 
 R --vanilla --slave < $BASEDIR/createRmappings.R
+R --vanilla --slave < $BASEDIR/createRmappingsHuman.R
 
 ##
 ## Clean up big files
