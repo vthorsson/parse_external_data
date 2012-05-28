@@ -5,10 +5,13 @@
 gene.info.human <- read.table("gene_info_simplified_human",sep="\t",as.is=TRUE)
 gene.eid <- as.character(gene.info.human$V1)
 gene.symbol <- as.character(gene.info.human$V2)
+gene.fullname <- as.character(gene.info.human$V3)
 names(gene.symbol) <- gene.eid
 names(gene.eid) <- gene.symbol
+names(gene.fullname) <- gene.eid
 save(gene.symbol,file="gene.symbol.human.RData")
 save(gene.eid,file="gene.eid.human.RData")
+save(gene.fullname,file="gene.fullname.human.RData")
 
 ## NCBI gene NP. Create files for mappings to use in R
 gene2refseq.human <- read.table("gene2refseqSimplified_human",sep="\t",as.is=TRUE)

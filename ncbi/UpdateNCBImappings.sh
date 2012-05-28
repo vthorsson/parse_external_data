@@ -14,9 +14,9 @@ BASEDIR=`dirname $0`
 
 wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_info.gz 
 gunzip gene_info.gz 
-awk -F '\t' '{print $1,$2,$3, $6}' gene_info > gene_info_simplified
-grep '^10090\b' gene_info_simplified | awk '{OFS="\t";print $2, $3}' > gene_info_simplified_mouse
-grep '^9606\b' gene_info_simplified  | awk '{OFS="\t";print $2, $3}' > gene_info_simplified_human
+awk -F '\t' '{OFS="\t";print $1,$2,$3, $6, $9}' gene_info > gene_info_simplified
+grep '^10090\b' gene_info_simplified | awk -F '\t' '{OFS="\t";print $2, $3, $5}' > gene_info_simplified_mouse
+grep '^9606\b' gene_info_simplified  | awk -F '\t' '{OFS="\t";print $2, $3, $5}' > gene_info_simplified_human
 
 ## Refseq
 wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2refseq.gz

@@ -5,10 +5,13 @@
 gene.info.mouse <- read.table("gene_info_simplified_mouse",sep="\t",as.is=TRUE)
 gene.eid <- as.character(gene.info.mouse$V1)
 gene.symbol <- as.character(gene.info.mouse$V2)
+gene.fullname <- as.character(gene.info.mouse$V3)
 names(gene.symbol) <- gene.eid
 names(gene.eid) <- gene.symbol
+names(gene.fullname) <- gene.eid
 save(gene.symbol,file="gene.symbol.RData")
 save(gene.eid,file="gene.eid.RData")
+save(gene.fullname,file="gene.fullname.RData")
 
 ## NCBI gene NP. Create files for mappings to use in R
 gene2refseq.mouse <- read.table("gene2refseqSimplified_mouse",sep="\t",as.is=TRUE)
