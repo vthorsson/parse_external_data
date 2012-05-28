@@ -2,10 +2,15 @@
 ## NCBI gene symbols. Create files for mappings to use in R
 ## gene.symbols: Gene symbols, given a Gene ID
 ## gene.eids: Gene ID, given a gene symbol
-gene.info.mouse <- read.table("gene_info_simplified_mouse",sep="\t",as.is=TRUE)
-gene.eid <- as.character(gene.info.mouse$V1)
-gene.symbol <- as.character(gene.info.mouse$V2)
-gene.fullname <- as.character(gene.info.mouse$V3)
+sc <- scan("gene_info_simplified_mouse",what="character",sep="\n")
+scc <- sapply(sc,strsplit,split="\t")
+gene.eid <- as.character(unlist(lapply(scc,"[[",1)))
+gene.symbol <- as.character(unlist(lapply(scc,"[[",2)))
+gene.fullname <- as.character(unlist(lapply(scc,"[[",3)))
+#gene.info.mouse <- read.table("gene_info_simplified_mouse",sep="\t",as.is=TRUE)
+#gene.eid <- as.character(gene.info.mouse$V1)
+#gene.symbol <- as.character(gene.info.mouse$V2)
+#gene.fullname <- as.character(gene.info.mouse$V3)
 names(gene.symbol) <- gene.eid
 names(gene.eid) <- gene.symbol
 names(gene.fullname) <- gene.eid
