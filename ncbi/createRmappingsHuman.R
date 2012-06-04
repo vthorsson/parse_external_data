@@ -42,9 +42,10 @@ gene2refseq.human <- read.table("gene2refseqSimplified_NM_human",sep="\t",as.is=
 eids <- as.character(gene2refseq.human$V1)
 nms <- as.character(gene2refseq.human$V2)
 
-goodinds <- grep("NM",nms) ## drop out others and blanks
-eids <- eids[goodinds]
-nms <- nms[goodinds]
+badinds <- which(nms=="-") 
+nms <- nms[-badinds] ## This leaves NM, NR, XM, XR as per
+## cut -f 2 gene2refseqSimplified_NM_mouse | cut -d '_' -f 1 | sort | uniq
+eids <- eids[-badinds]
 ## can have multiple redundancies of NMs for each eid.
  
 eid.of.nm <- eids
