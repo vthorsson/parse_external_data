@@ -49,6 +49,16 @@ mv t3 gene2refseqSimplified_NM_human
 rm -f t1 t2
 
 ##
+## Mapping to Ensembl 
+## 
+## Refseq
+wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene2ensembl.gz
+gunzip gene2ensembl.gz 
+grep '^10090\b' gene2ensembl | awk '{OFS="\t"; print $3,$2}' | sort | uniq  > gene2ensembl_simplified_mouse
+grep '^9606\b' gene2ensembl | awk '{OFS="\t"; print $3,$2}' | sort | uniq  > gene2ensembl_simplified_human
+## Note that these have redundancies in both directions of the mapping, but most ensembl gene IDs are unique in these files
+ 
+##
 ## Mapping files for R
 ##
 
@@ -61,3 +71,4 @@ R --vanilla --slave < $BASEDIR/createRmappingsHuman.R
 
 rm -f gene_info gene_info_simplified
 rm -f gene2refseq 
+rm -f gene2ensembl
