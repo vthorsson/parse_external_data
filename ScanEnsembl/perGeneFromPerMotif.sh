@@ -24,6 +24,10 @@ do
     fastaHeader=${fastaHeaders[$i]}
     seq=`basename ${fastaFiles[$i]} .fasta`
     outfile=$gffDir/$seq.gff
-    echo "Generating $outfile"
-    grep -h $fastaHeader $perMotifScanDir/*.gff |  sort -k 5  -nr > $outfile
+    if [ ! -f $outfile ] ; then
+	echo "Generating $outfile"
+	grep -h $fastaHeader $perMotifScanDir/*.gff |  sort -k 5  -nr > $outfile
+    else
+	echo "$outfile exists. Moving on."
+    fi
 done

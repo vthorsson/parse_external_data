@@ -17,12 +17,17 @@ do
     seq=`basename ${gffFiles[$i]} .gff`
     gffFile=${gffFiles[$i]}
     outfile=$parsedDir/$seq.gff.parsed
-    if [ -e $gffDir/$gffFile ]
+    if [ ! -f $outfile ] ; then 
+	if [ -e $gffDir/$gffFile ]
 	then
 	    echo "Processing $gffDir/$gffFile to get $outfile"
 	    $CODE_DIR/parseScanResult.py $gffDir/$gffFile > $outfile
 	else
 	    echo "$gffDir/$gffFile not found"
+	fi
+    else 
+	echo "$outfile exists. Moving on."
     fi
+
 done
 

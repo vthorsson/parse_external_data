@@ -12,6 +12,7 @@ then
   exit $WRONGARGS
 fi
 
+fastafile=$1
 thresholdFile=$2
 outfile=$3
 seqbase=`basename $1 .fasta`
@@ -20,7 +21,6 @@ outdir="scanPerMotif/"
 
 matfiles=(`ls $matrixDir/*.dat`)
 
-
 for (( i = 0 ; i < ${#matfiles[@]} ; i++ ))
 ##for (( i = 0 ; i < 3 ; i++ ))
 
@@ -28,8 +28,11 @@ do
     mat=`basename ${matfiles[$i]} .dat`
     threshold=`grep ^$mat'\b' $thresholdFile | awk '{print $2}'`
     outfile=$outdir$mat".gff"
-    echo "Generating $outfile"
-    $CODE_DIR/MotifLocator_linux -f $1  -b $CODE_DIR/bModel.fa -m ${matfiles[$i]} -t $threshold -o $outfile >& /dev/null
-    
+    if [ ! -f $outfile ] ; then
+	echo "Generating $outfile"
+	$CODE_DIR/MotifLocator_linux -f $fastafile  -b $CODE_DIR/bModel.fa -m ${matfiles[$i]} -t $threshold -o $outfile >& /dev/null
+    else
+	echo "$outfile exists, moving on."
+    fi
 done
     
