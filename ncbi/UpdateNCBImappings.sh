@@ -36,7 +36,7 @@ mv t3 gene2refseqSimplified_NM_mouse
 rm -f t1 t2
 
 grep '^9606\b' gene2refseq > gene2refseq_human
-awk -F '\t' '{print $2,$4,$6}' gene2refseq_human > t1
+awk -F '\t' '{OFS="\t";print $2,$4,$6}' gene2refseq_human > t1
 sed 's/\.[0-9]//g' t1 > t2
 sort -n t2 | uniq > t3
 mv t3 gene2refseqSimplified_human
