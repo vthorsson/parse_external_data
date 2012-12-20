@@ -97,4 +97,8 @@ for block in hblocks:
     for mouseID in mouseIDs:
       print str(humanID) + '\t' + str(mouseID)
 
-      
+## Warning 
+##
+## ATF1	466	11908	Atf1
+## ATF1	466	100040260	Gm1862
+## In this example, the last of these turns out to be a XP_

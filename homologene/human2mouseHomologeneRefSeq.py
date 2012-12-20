@@ -130,4 +130,7 @@ for block in hblocks:
   mouseNPs=getMouseNPs(block)
   for humanNP in humanNPs:
     for mouseNP in mouseNPs:
-      print stripDotSuffix(humanNP) + '\t' + stripDotSuffix(mouseNP)
+		ph=stripDotSuffix(humanNP)
+		pm=stripDotSuffix(mouseNP)
+		if ( ("NP_" in ph) and ("NP_" in pm)): # let's drop XP and others
+			print stripDotSuffix(humanNP) + '\t' + stripDotSuffix(mouseNP)
