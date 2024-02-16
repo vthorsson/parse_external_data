@@ -57,13 +57,31 @@ gunzip gene2ensembl.gz
 grep '^10090\b' gene2ensembl | awk '{OFS="\t"; print $3,$2}' | sort | uniq  > gene2ensembl_simplified_mouse
 grep '^9606\b' gene2ensembl | awk '{OFS="\t"; print $3,$2}' | sort | uniq  > gene2ensembl_simplified_human
 ## Note that these have redundancies in both directions of the mapping, but most ensembl gene IDs are unique in these files
- 
+
+##
+## Human Mouse Orthologs
+## 
+## 
+wget ftp://ftp.ncbi.nlm.nih.gov/gene/DATA/gene_orthologs.gz
+gunzip gene_orthologs.gz
+mouseOrgID=10090
+humanOrgID=9606
+
+grep ^$humanOrgID gene_orthologs  | awk -v r=$mouseOrgID 'BEGIN { FS = "\t"; OFS="\t" } ; { if ($4==r ) print $2, $5}' > human2mouse_1
+grep ^$mouseOrgID gene_orthologs  | awk -v r=$humanOrgID 'BEGIN { FS = "\t"; OFS="\t" } ; { if ($4==r ) print $5, $2}' > human2mouse_2
+cat human2mouse_1 human2mouse_2 > human2mouse_geneID
+python ~/bin/reMap.py  human2mouse_geneID 1 gene_info_simplified_human 1 2 | cut -f 1 > human_symbol
+python ~/bin/reMap.py  human2mouse_geneID 2 gene_info_simplified_mouse 1 2 | cut -f 2 > mouse_symbol
+paste human2mouse_geneID human_symbol mouse_symbol | awk -v OFS="\t" -F "\t" '{print $3, $1,$4, $2}' > human2mouse
+rm -f gene_orthologs human2mouse_1 human2mouse_2 human_symbol mouse_symbol human2mouse_geneID
+
+
 ##
 ## Mapping files for R
 ##
 
-R --vanilla --slave < $BASEDIR/createRmappings.R
-R --vanilla --slave < $BASEDIR/createRmappingsHuman.R
+## R --vanilla --slave < $BASEDIR/createRmappings.R
+## R --vanilla --slave < $BASEDIR/createRmappingsHuman.R
 
 ##
 ## Clean up big files
